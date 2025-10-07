@@ -1,0 +1,27 @@
+{
+  "name": "real-estate-marketplace-contracts",
+  "version": "1.0.0",
+  "description": "Marketplace completo de real estate con 6 smart contracts desplegados en Base Sepolia",
+  "main": "index.js",
+  "scripts": {
+    "compile": "pnpm hardhat compile",
+    "deploy:all": "pnpm hardhat run scripts/deploy-all.js --network baseSepolia",
+    "deploy:rental": "pnpm hardhat run scripts/deploy-rental.js --network baseSepolia",
+    "deploy:nft": "pnpm hardhat run scripts/deploy-nft.js --network baseSepolia",
+    "deploy:escrow": "pnpm hardhat run scripts/deploy-escrow.js --network baseSepolia",
+    "deploy:auction": "pnpm hardhat run scripts/deploy-auction.js --network baseSepolia",
+    "deploy:insurance": "pnpm hardhat run scripts/deploy-insurance.js --network baseSepolia",
+    "deploy:management": "pnpm hardhat run scripts/deploy-management.js --network baseSepolia",
+    "test": "pnpm hardhat test",
+    "verify:all": "pnpm hardhat run scripts/verify-all.js --network baseSepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "hardhat": "^2.19.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "packageManager": "pnpm@8.0.0"
+}

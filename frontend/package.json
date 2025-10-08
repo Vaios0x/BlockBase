@@ -1,0 +1,14 @@
+{
+  "name": "blockbase-frontend",
+  "version": "1.0.0",
+  "description": "BlockBase Real Estate Marketplace Frontend",
+  "private": true,
+  "scripts": {
+    "serve": "npx http-server . -p 3000 -o",
+    "dev": "npx http-server . -p 3000 -o"
+  },
+  "dependencies": {
+    "web3": "^1.8.0",
+    "ethers": "^5.7.2"
+  }
+}

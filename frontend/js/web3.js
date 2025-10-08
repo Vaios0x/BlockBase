@@ -1,4 +1,4 @@
-// Web3 Configuration and Connection
+// Web3 Configuration and Connection with WalletConnect Support
 class Web3Manager {
     constructor() {
         this.web3 = null;
@@ -6,6 +6,8 @@ class Web3Manager {
         this.currentAccount = null;
         this.chainId = null;
         this.isConnected = false;
+        this.walletConnect = null;
+        this.connector = null;
         
         // Base Sepolia configuration
         this.networkConfig = {
@@ -33,12 +35,20 @@ class Web3Manager {
     }
     
     async init() {
-        if (typeof window.ethereum !== 'undefined') {
-            this.web3 = new Web3(window.ethereum);
-            this.setupEventListeners();
-            await this.checkConnection();
-        } else {
-            this.showError('MetaMask no está instalado. Por favor, instala MetaMask para usar esta aplicación.');
+        try {
+            // Check for MetaMask first
+            if (typeof window.ethereum !== 'undefined') {
+                this.web3 = new Web3(window.ethereum);
+                this.setupEventListeners();
+                await this.checkConnection();
+            } else {
+                // Initialize WalletConnect as fallback
+                await this.initializeWalletConnect();
+                this.showWalletOptions();
+            }
+        } catch (error) {
+            console.error('Error initializing Web3:', error);
+            this.showError('Error inicializando la conexión de wallet. Por favor, recarga la página.');
         }
     }
     
@@ -79,6 +89,23 @@ class Web3Manager {
         try {
             this.showLoading('Conectando wallet...');
             
+            // Try MetaMask first
+            if (typeof window.ethereum !== 'undefined') {
+                await this.connectMetaMask();
+            } else {
+                // Use WalletConnect
+                await this.connectWalletConnect();
+            }
+            
+        } catch (error) {
+            this.hideLoading();
+            console.error('Error connecting wallet:', error);
+            this.showError('Error conectando wallet: ' + error.message);
+        }
+    }
+    
+    async connectMetaMask() {
+        try {
             // Request account access
             const accounts = await window.ethereum.request({
                 method: 'eth_requestAccounts'
@@ -90,16 +117,295 @@ class Web3Manager {
             await this.handleAccountsChanged(accounts);
             
             this.hideLoading();
-            this.showSuccess('Wallet conectado exitosamente');
+            this.showSuccess('MetaMask conectado exitosamente');
             
         } catch (error) {
             this.hideLoading();
             if (error.code === 4001) {
                 this.showError('Conexión rechazada por el usuario');
             } else {
-                this.showError('Error conectando wallet: ' + error.message);
+                throw error;
             }
         }
+    }
+    
+    async initializeWalletConnect() {
+        try {
+            // Load WalletConnect script dynamically
+            if (!window.WalletConnect) {
+                await this.loadWalletConnectScript();
+            }
+            
+            // Initialize WalletConnect
+            this.connector = new window.WalletConnect({
+                bridge: 'https://bridge.walletconnect.org',
+                qrcodeModal: window.WalletConnectQRCodeModal,
+            });
+            
+            // Setup WalletConnect event listeners
+            this.setupWalletConnectListeners();
+            
+        } catch (error) {
+            console.error('Error initializing WalletConnect:', error);
+            throw error;
+        }
+    }
+    
+    async loadWalletConnectScript() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js';
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+    
+    setupWalletConnectListeners() {
+        if (!this.connector) return;
+        
+        // Listen for session updates
+        this.connector.on('session_update', (error, payload) => {
+            if (error) {
+                console.error('WalletConnect session update error:', error);
+                return;
+            }
+            
+            const { accounts, chainId } = payload.params[0];
+            this.handleAccountsChanged(accounts);
+        });
+        
+        // Listen for disconnect
+        this.connector.on('disconnect', (error, payload) => {
+            if (error) {
+                console.error('WalletConnect disconnect error:', error);
+                return;
+            }
+            
+            this.handleDisconnect();
+        });
+    }
+    
+    async connectWalletConnect() {
+        try {
+            if (!this.connector) {
+                await this.initializeWalletConnect();
+            }
+            
+            // Check if already connected
+            if (this.connector.connected) {
+                const { accounts, chainId } = this.connector.session;
+                await this.handleAccountsChanged(accounts);
+                this.hideLoading();
+                this.showSuccess('WalletConnect conectado exitosamente');
+                return;
+            }
+            
+            // Create new session
+            await this.connector.createSession();
+            
+            // Get QR code URI
+            const uri = this.connector.uri;
+            
+            // Show QR code modal
+            this.showQRCode(uri);
+            
+        } catch (error) {
+            this.hideLoading();
+            throw error;
+        }
+    }
+    
+    showQRCode(uri) {
+        // Create QR code modal
+        const modal = document.createElement('div');
+        modal.className = 'walletconnect-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        `;
+        
+        modal.innerHTML = `
+            <div style="
+                background: white;
+                padding: 2rem;
+                border-radius: 16px;
+                text-align: center;
+                max-width: 400px;
+                width: 90%;
+            ">
+                <h3>Escanea con tu wallet</h3>
+                <div id="qrcode" style="margin: 1rem 0;"></div>
+                <p>Usa tu wallet móvil para escanear este código QR</p>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: #6366f1;
+                    color: white;
+                    border: none;
+                    padding: 0.5rem 1rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    margin-top: 1rem;
+                ">Cerrar</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Generate QR code
+        this.generateQRCode(uri, 'qrcode');
+    }
+    
+    generateQRCode(text, elementId) {
+        try {
+            // Use QRCode.js library if available
+            if (typeof QRCode !== 'undefined') {
+                const qrContainer = document.getElementById(elementId);
+                qrContainer.innerHTML = ''; // Clear previous content
+                
+                QRCode.toCanvas(qrContainer, text, {
+                    width: 200,
+                    height: 200,
+                    color: {
+                        dark: '#000000',
+                        light: '#FFFFFF'
+                    }
+                }, function (error) {
+                    if (error) {
+                        console.error('QR Code generation error:', error);
+                        this.generateSimpleQRCode(text, elementId);
+                    }
+                });
+            } else {
+                this.generateSimpleQRCode(text, elementId);
+            }
+        } catch (error) {
+            console.error('Error generating QR code:', error);
+            this.generateSimpleQRCode(text, elementId);
+        }
+    }
+    
+    generateSimpleQRCode(text, elementId) {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 200;
+        canvas.height = 200;
+        
+        // Draw a simple QR-like pattern
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, 200, 200);
+        
+        // Create a simple pattern
+        for (let i = 0; i < 20; i++) {
+            for (let j = 0; j < 20; j++) {
+                if ((i + j) % 2 === 0) {
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(i * 10, j * 10, 10, 10);
+                }
+            }
+        }
+        
+        // Add text
+        ctx.fillStyle = '#000';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('QR Code', 100, 190);
+        
+        document.getElementById(elementId).appendChild(canvas);
+    }
+    
+    showWalletOptions() {
+        const connectButton = document.getElementById('connect-wallet');
+        if (connectButton) {
+            connectButton.innerHTML = `
+                <i class="fas fa-wallet"></i>
+                Conectar Wallet
+            `;
+            connectButton.onclick = () => this.showWalletModal();
+        }
+    }
+    
+    showWalletModal() {
+        const modal = document.createElement('div');
+        modal.className = 'wallet-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        `;
+        
+        modal.innerHTML = `
+            <div style="
+                background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255,255,255,0.1);
+                padding: 2rem;
+                border-radius: 16px;
+                text-align: center;
+                max-width: 400px;
+                width: 90%;
+                color: white;
+            ">
+                <h3>Selecciona tu Wallet</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0;">
+                    <button onclick="web3Manager.connectMetaMask()" style="
+                        background: linear-gradient(135deg, #f6851b, #e2761b);
+                        color: white;
+                        border: none;
+                        padding: 1rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        justify-content: center;
+                    ">
+                        <i class="fab fa-ethereum"></i>
+                        MetaMask
+                    </button>
+                    <button onclick="web3Manager.connectWalletConnect()" style="
+                        background: linear-gradient(135deg, #3b99fc, #1e88e5);
+                        color: white;
+                        border: none;
+                        padding: 1rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        justify-content: center;
+                    ">
+                        <i class="fas fa-qrcode"></i>
+                        WalletConnect
+                    </button>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    background: transparent;
+                    color: white;
+                    border: 1px solid rgba(255,255,255,0.3);
+                    padding: 0.5rem 1rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                ">Cerrar</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
     }
     
     async checkNetwork() {

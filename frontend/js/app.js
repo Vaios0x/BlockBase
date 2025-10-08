@@ -67,6 +67,14 @@ class BlockBaseApp {
             });
         }
         
+        // Disconnect wallet button
+        const disconnectButton = document.getElementById('disconnect-wallet');
+        if (disconnectButton) {
+            disconnectButton.addEventListener('click', () => {
+                this.web3Manager.disconnectWallet();
+            });
+        }
+        
         // Explore properties button
         const exploreButton = document.getElementById('explore-properties');
         if (exploreButton) {

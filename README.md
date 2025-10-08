@@ -68,28 +68,26 @@ Un marketplace completo de bienes raíces construido en blockchain con 6 smart c
 git clone https://github.com/Vaios0x/BlockBase.git
 cd BlockBase
 
-# Instalar dependencias
-npm install
-# o
+# Instalar dependencias con pnpm
 pnpm install
 
 # Compilar contratos
-npx hardhat compile
+pnpm run compile
 ```
 
 ### Despliegue
 
 ```bash
 # Desplegar todos los contratos
-npm run deploy:all
+pnpm run deploy:all
 
 # Desplegar contratos individuales
-npm run deploy:rental
-npm run deploy:nft
-npm run deploy:escrow
-npm run deploy:auction
-npm run deploy:insurance
-npm run deploy:management
+pnpm run deploy:rental
+pnpm run deploy:nft
+pnpm run deploy:escrow
+pnpm run deploy:auction
+pnpm run deploy:insurance
+pnpm run deploy:management
 ```
 
 ### Configuración
@@ -168,7 +166,7 @@ BlockBase/
 
 ```bash
 # Ejecutar tests
-npm test
+pnpm test
 ```
 
 ## 📝 Licencia

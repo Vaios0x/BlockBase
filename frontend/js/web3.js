@@ -1,4 +1,4 @@
-// Web3 Configuration and Connection with WalletConnect Support
+// Web3 Configuration and Connection with WalletConnect v2 Support
 class Web3Manager {
     constructor() {
         this.web3 = null;
@@ -6,8 +6,8 @@ class Web3Manager {
         this.currentAccount = null;
         this.chainId = null;
         this.isConnected = false;
-        this.walletConnect = null;
-        this.connector = null;
+        this.walletConnectProvider = null;
+        this.walletConnectModal = null;
         
         // Base Sepolia configuration
         this.networkConfig = {
@@ -36,19 +36,95 @@ class Web3Manager {
     
     async init() {
         try {
-            // Check for MetaMask first
-            if (typeof window.ethereum !== 'undefined') {
-                this.web3 = new Web3(window.ethereum);
-                this.setupEventListeners();
-                await this.checkConnection();
-            } else {
-                // Initialize WalletConnect as fallback
-                await this.initializeWalletConnect();
-                this.showWalletOptions();
-            }
+            // Initialize WalletConnect v2
+            await this.initializeWalletConnect();
+            
+            // Check for existing connection
+            await this.checkConnection();
         } catch (error) {
             console.error('Error initializing Web3:', error);
             this.showError('Error inicializando la conexión de wallet. Por favor, recarga la página.');
+        }
+    }
+    
+    async initializeWalletConnect() {
+        try {
+            // Wait a bit for scripts to load
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            // Check if WalletConnect is available
+            if (typeof window.WalletConnectModal === 'undefined') {
+                console.log('WalletConnect Modal not loaded, using fallback');
+                this.showWalletOptions();
+                return;
+            }
+            
+            console.log('WalletConnect Modal loaded successfully');
+            
+            // Initialize WalletConnect Modal
+            this.walletConnectModal = new window.WalletConnectModal({
+                projectId: '2f05a7f74c1f039070e7d78b3b8a0b8b',
+                chains: [84532], // Base Sepolia
+                enableNetworkSwitching: true,
+                enableExplorer: true,
+                explorerRecommendedWalletIds: [
+                    'c57ca95b47569778a828d19178114f4db188b89b763c899ba0be274e97267d96', // MetaMask
+                    '4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0', // Trust Wallet
+                ],
+                explorerExcludedWalletIds: 'ALL',
+                termsOfServiceUrl: 'https://blockbase.app/terms',
+                privacyPolicyUrl: 'https://blockbase.app/privacy'
+            });
+            
+            console.log('WalletConnect Modal initialized');
+            
+            // Setup event listeners
+            this.setupWalletConnectListeners();
+            
+        } catch (error) {
+            console.error('Error initializing WalletConnect:', error);
+            // Fallback to regular wallet options
+            this.showWalletOptions();
+        }
+    }
+    
+    // Setup event listeners for WalletConnect Modal
+    setupWalletConnectListeners() {
+        if (!this.walletConnectModal) return;
+        
+        // Listen for connection events from the modal
+        this.walletConnectModal.on('connect', (connectInfo) => {
+            console.log('WalletConnect Modal connected:', connectInfo);
+            this.handleWalletConnectModalConnect(connectInfo);
+        });
+        
+        this.walletConnectModal.on('disconnect', () => {
+            console.log('WalletConnect Modal disconnected');
+            this.handleDisconnect();
+        });
+    }
+    
+    async handleWalletConnectModalConnect(connectInfo) {
+        try {
+            // Get accounts and chain info
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            
+            this.currentAccount = accounts[0];
+            this.accounts = accounts;
+            this.isConnected = true;
+            this.chainId = chainId;
+            
+            // Initialize Web3
+            this.web3 = new Web3(window.ethereum);
+            
+            this.updateUI();
+            await this.updateBalance();
+            this.showSuccess('Wallet conectado exitosamente');
+            
+        } catch (error) {
+            console.error('Error handling WalletConnect Modal connect:', error);
+            this.showError('Error conectando wallet: ' + error.message);
         }
     }
     
@@ -87,20 +163,38 @@ class Web3Manager {
     
     async connectWallet() {
         try {
-            this.showLoading('Conectando wallet...');
+            this.showLoading('Abriendo modal de conexión...');
             
-            // Try MetaMask first
-            if (typeof window.ethereum !== 'undefined') {
-                await this.connectMetaMask();
+            // Use WalletConnect Modal if available
+            if (this.walletConnectModal) {
+                await this.connectWithWalletConnectModal();
             } else {
-                // Use WalletConnect
-                await this.connectWalletConnect();
+                // Fallback to regular wallet options
+                this.hideLoading();
+                this.showWalletModal();
             }
             
         } catch (error) {
             this.hideLoading();
             console.error('Error connecting wallet:', error);
             this.showError('Error conectando wallet: ' + error.message);
+        }
+    }
+    
+    async connectWithWalletConnectModal() {
+        try {
+            if (!this.walletConnectModal) {
+                throw new Error('WalletConnect Modal not initialized');
+            }
+            
+            // Open WalletConnect modal
+            this.walletConnectModal.open();
+            
+            this.hideLoading();
+            
+        } catch (error) {
+            this.hideLoading();
+            throw error;
         }
     }
     
@@ -470,6 +564,25 @@ class Web3Manager {
         this.updateUI();
     }
     
+    async disconnectWallet() {
+        try {
+            // Disconnect from WalletConnect Modal if available
+            if (this.walletConnectModal) {
+                this.walletConnectModal.close();
+            }
+            
+            // Reset connection state
+            this.handleDisconnect();
+            
+            // Show success message
+            this.showSuccess('Wallet desconectado exitosamente');
+            
+        } catch (error) {
+            console.error('Error disconnecting wallet:', error);
+            this.showError('Error desconectando wallet: ' + error.message);
+        }
+    }
+    
     async updateBalance() {
         if (!this.currentAccount) return;
         
@@ -491,6 +604,7 @@ class Web3Manager {
         const connectButton = document.getElementById('connect-wallet');
         const walletInfo = document.getElementById('wallet-info');
         const walletAddress = document.getElementById('wallet-address');
+        const disconnectButton = document.getElementById('disconnect-wallet');
         
         if (this.isConnected) {
             connectButton.style.display = 'none';
@@ -498,9 +612,15 @@ class Web3Manager {
             if (walletAddress) {
                 walletAddress.textContent = this.formatAddress(this.currentAccount);
             }
+            if (disconnectButton) {
+                disconnectButton.style.display = 'flex';
+            }
         } else {
             connectButton.style.display = 'flex';
             walletInfo.style.display = 'none';
+            if (disconnectButton) {
+                disconnectButton.style.display = 'none';
+            }
         }
     }
     

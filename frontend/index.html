@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <!-- WalletConnect -->
-    <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
-    <script src="https://unpkg.com/@walletconnect/qrcode-modal@1.7.8/dist/umd/index.min.js"></script>
+    <!-- WalletConnect v2 -->
+    <script src="https://unpkg.com/@walletconnect/modal@2.7.1/dist/index.umd.js"></script>
+    <script src="https://unpkg.com/@walletconnect/ethereum-provider@2.9.0/dist/index.umd.js"></script>
+    <!-- WalletConnect CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@walletconnect/modal@2.7.1/dist/index.css">
     <!-- QR Code Generator -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
@@ -48,6 +50,10 @@
                 <div class="wallet-info" id="wallet-info" style="display: none;">
                     <span class="wallet-address" id="wallet-address"></span>
                     <span class="wallet-balance" id="wallet-balance"></span>
+                    <button class="btn-disconnect" id="disconnect-wallet" style="display: none;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Desconectar
+                    </button>
                 </div>
             </div>
             <div class="nav-toggle" id="nav-toggle">
@@ -354,6 +360,9 @@
             <p>Procesando transacción...</p>
         </div>
     </div>
+
+    <!-- WalletConnect Modal Container -->
+    <div id="walletconnect-modal"></div>
 
     <!-- Scripts -->
     <script src="js/web3.js"></script>

@@ -36,9 +36,10 @@ Frontend completo y funcional para el marketplace de real estate BlockBase, cons
 ### Instalación
 1. Clona el repositorio
 2. Navega a la carpeta `frontend`
-3. Abre `index.html` en tu navegador
-4. Conecta tu wallet MetaMask
-5. ¡Disfruta del marketplace!
+3. Instala dependencias: `pnpm install`
+4. Abre `index.html` en tu navegador
+5. Conecta tu wallet MetaMask o WalletConnect
+6. ¡Disfruta del marketplace!
 
 ### Configuración
 El archivo `config.js` contiene toda la configuración:
@@ -162,8 +163,8 @@ const networkConfig = {
 # Usando Python
 python -m http.server 8000
 
-# Usando Node.js
-npx serve .
+# Usando pnpm
+pnpm run serve
 
 # Usando PHP
 php -S localhost:8000

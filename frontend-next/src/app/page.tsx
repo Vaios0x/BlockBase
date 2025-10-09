@@ -10,6 +10,7 @@ import AppKitDemo from '@/components/AppKitDemo';
 import ConnectionOptions from '@/components/ConnectionOptions';
 import BuilderRewardsStatus from '@/components/BuilderRewardsStatus';
 import BuilderProfile from '@/components/BuilderProfile';
+import TalentProtocolProfile from '@/components/TalentProtocolProfile';
 
 const NeuralBackground = dynamic(() => import('@/components/NeuralBackground'), {
   ssr: false,
@@ -319,6 +320,11 @@ export default function Home() {
             <div className="dashboard-card glass">
               <h3>Builder Rewards Status</h3>
               <BuilderRewardsStatus />
+            </div>
+            
+            <div className="dashboard-card glass">
+              <h3>Talent Protocol Profile</h3>
+              <TalentProtocolProfile />
             </div>
           </div>
         </div>

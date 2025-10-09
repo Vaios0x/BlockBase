@@ -75,6 +75,16 @@ export default function BuilderProfile() {
               variant="primary"
               size="sm"
               className="w-full flex items-center justify-center gap-2"
+              onClick={() => window.open('https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6', '_blank')}
+            >
+              <i className="fas fa-trophy"></i>
+              Talent Protocol Profile
+            </NeuralButton>
+            
+            <NeuralButton
+              variant="secondary"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2"
               onClick={() => window.open('https://builder.base.org', '_blank')}
             >
               <i className="fas fa-chart-line"></i>

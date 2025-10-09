@@ -95,6 +95,7 @@ export default function BuilderRewardsStatus() {
             <h4 className="text-sm font-semibold text-white">Builder Info</h4>
             <div className="text-xs text-gray-400 space-y-1">
               <p><span className="text-white">Basename:</span> vaiosx.base.eth</p>
+              <p><span className="text-white">Talent Protocol:</span> <a href="https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6" target="_blank" className="text-cyan-400 hover:text-cyan-300">View Profile</a></p>
               <p><span className="text-white">Builder Score:</span> {eligibility.builderInfo?.builderScore || 'Pending'}</p>
               <p><span className="text-white">Status:</span> {eligibility.builderInfo?.isEligible ? 'Eligible' : 'Pending'}</p>
               <p><span className="text-white">Last Activity:</span> {new Date().toLocaleDateString()}</p>

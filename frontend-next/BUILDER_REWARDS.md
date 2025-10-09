@@ -222,6 +222,8 @@ Con esta implementación, deberías:
 
 **Project ID**: `e1b7b8bda639fe3153018f6c76ced0a4`  
 **Red**: Base Sepolia (84532)  
+**Basename**: vaiosx.base.eth  
+**Talent Protocol**: [https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6](https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6)  
 **Contratos**: 6 desplegados  
 **Tracking**: ✅ Implementado  
 **Elegibilidad**: ✅ Configurado

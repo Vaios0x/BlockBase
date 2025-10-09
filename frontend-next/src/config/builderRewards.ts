@@ -84,6 +84,7 @@ export const BUILDER_REWARDS_CONFIG = {
   // Builder Information
   builder: {
     basename: 'vaiosx.base.eth',
+    talentProtocolUrl: 'https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6',
     builderScore: 0, // Will be updated when available
     isEligible: true,
     lastActivity: new Date(),

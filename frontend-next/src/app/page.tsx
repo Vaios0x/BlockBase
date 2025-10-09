@@ -2,10 +2,29 @@
 
 import { useEffect } from 'react';
 import Script from 'next/script';
-import NeuralBackground from '@/components/NeuralBackground';
-import GlassCard from '@/components/GlassCard';
+import dynamic from 'next/dynamic';
 import NeuralButton from '@/components/NeuralButton';
-import WalletConnect from '@/components/WalletConnect';
+import AppKitWalletConnect from '@/components/AppKitWalletConnect';
+import PropertiesList from '@/components/PropertiesList';
+import AppKitDemo from '@/components/AppKitDemo';
+import ConnectionOptions from '@/components/ConnectionOptions';
+import BuilderRewardsStatus from '@/components/BuilderRewardsStatus';
+import BuilderProfile from '@/components/BuilderProfile';
+
+const NeuralBackground = dynamic(() => import('@/components/NeuralBackground'), {
+  ssr: false,
+  loading: () => (
+    <div className="fixed inset-0 w-full h-full z-0">
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #1a1a1a 100%)',
+          zIndex: -1 
+        }}
+      />
+    </div>
+  )
+});
 
 export default function Home() {
   useEffect(() => {
@@ -20,10 +39,7 @@ export default function Home() {
       {/* Scripts */}
       <Script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js" strategy="beforeInteractive" />
       <Script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" strategy="beforeInteractive" />
-      <Script src="https://unpkg.com/@walletconnect/modal@2.7.1/dist/index.umd.js" strategy="beforeInteractive" />
-      <Script src="https://unpkg.com/@walletconnect/ethereum-provider@2.9.0/dist/index.umd.js" strategy="beforeInteractive" />
-      <Script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" strategy="beforeInteractive" />
-      <Script src="/js/web3.js" strategy="afterInteractive" />
+      <Script src="/js/web3.js" strategy="beforeInteractive" />
       <Script src="/js/contracts.js" strategy="afterInteractive" />
       <Script src="/js/app.js" strategy="afterInteractive" />
 
@@ -65,7 +81,7 @@ export default function Home() {
             </div>
             
             <div className="flex items-center gap-4">
-              <WalletConnect />
+              <AppKitWalletConnect />
             </div>
           </div>
         </div>
@@ -98,8 +114,8 @@ export default function Home() {
                 <div className="text-sm text-gray-400">Descentralizado</div>
               </div>
               <div className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                <div className="text-3xl font-bold text-blue-400 mb-2">Base</div>
-                <div className="text-sm text-gray-400">Sepolia Network</div>
+                <div className="text-3xl font-bold text-blue-400 mb-2">AppKit</div>
+                <div className="text-sm text-gray-400">Reown Integration</div>
               </div>
             </div>
             
@@ -116,7 +132,7 @@ export default function Home() {
           </div>
           
           <div className="flex justify-center">
-            <GlassCard intensity="intense" className="p-8 max-w-md w-full">
+            <div className="p-8 max-w-md w-full rounded-2xl border shadow-lg bg-white/12 backdrop-blur-lg border-white/18 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300">
               <div className="space-y-6">
                 <div className="w-full h-48 bg-gradient-to-br from-purple-500 to-blue-500 rounded-2xl flex items-center justify-center">
                   <i className="fas fa-home text-6xl text-white/80"></i>
@@ -130,7 +146,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </GlassCard>
+            </div>
           </div>
         </div>
       </section>
@@ -163,9 +179,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="properties-grid" id="properties-grid">
-            {/* Properties will be loaded here */}
-          </div>
+          <PropertiesList />
         </div>
       </section>
 
@@ -288,21 +302,23 @@ export default function Home() {
             </div>
             
             <div className="dashboard-card glass">
-              <h3>Estadísticas</h3>
-              <div className="stats-grid">
-                <div className="stat-item">
-                  <span className="stat-value" id="total-properties">0</span>
-                  <span className="stat-label">Propiedades</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-value" id="total-earnings">0 ETH</span>
-                  <span className="stat-label">Ganancias</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-value" id="active-rentals">0</span>
-                  <span className="stat-label">Rentas Activas</span>
-                </div>
-              </div>
+              <h3>AppKit Demo</h3>
+              <AppKitDemo />
+            </div>
+            
+            <div className="dashboard-card glass">
+              <h3>Opciones de Conexión</h3>
+              <ConnectionOptions />
+            </div>
+            
+            <div className="dashboard-card glass">
+              <h3>Builder Profile</h3>
+              <BuilderProfile />
+            </div>
+            
+            <div className="dashboard-card glass">
+              <h3>Builder Rewards Status</h3>
+              <BuilderRewardsStatus />
             </div>
           </div>
         </div>
@@ -376,8 +392,6 @@ export default function Home() {
         </div>
     </div>
 
-      {/* WalletConnect Modal Container */}
-      <div id="walletconnect-modal"></div>
     </>
   );
 }

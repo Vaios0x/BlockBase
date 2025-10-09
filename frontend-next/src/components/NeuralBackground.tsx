@@ -1,11 +1,18 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function NeuralBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -144,7 +151,21 @@ export default function NeuralBackground() {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [isClient]);
+
+  if (!isClient) {
+    return (
+      <div className="fixed inset-0 w-full h-full z-0">
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{ 
+            background: 'linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #1a1a1a 100%)',
+            zIndex: -1 
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 w-full h-full z-0">

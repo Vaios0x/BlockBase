@@ -34,13 +34,6 @@ class Web3Manager {
     
     async init() {
         try {
-            // Wait for Web3 library to be available
-            if (typeof Web3 === 'undefined') {
-                console.log('Web3 library not yet loaded, waiting...');
-                setTimeout(() => this.init(), 100);
-                return;
-            }
-            
             // Check for existing connection
             await this.checkConnection();
             this.setupEventListeners();
@@ -90,10 +83,6 @@ class Web3Manager {
         try {
             if (typeof window.ethereum === 'undefined') {
                 throw new Error('MetaMask is not installed. Please install MetaMask to continue.');
-            }
-            
-            if (typeof Web3 === 'undefined') {
-                throw new Error('Web3 library not loaded. Please refresh the page.');
             }
             
             this.showLoading('Conectando wallet...');
@@ -164,12 +153,6 @@ class Web3Manager {
             this.accounts = accounts;
             this.currentAccount = accounts[0];
             this.isConnected = true;
-            
-            // Initialize Web3 instance
-            if (typeof Web3 !== 'undefined') {
-                this.web3 = new Web3(window.ethereum);
-            }
-            
             this.updateUI();
             await this.updateBalance();
         }
@@ -204,7 +187,7 @@ class Web3Manager {
     }
     
     async updateBalance() {
-        if (!this.currentAccount || !this.web3) return;
+        if (!this.currentAccount) return;
         
         try {
             const balance = await this.web3.eth.getBalance(this.currentAccount);
@@ -271,9 +254,6 @@ class Web3Manager {
     
     async getTransactionReceipt(txHash) {
         try {
-            if (!this.web3) {
-                throw new Error('Web3 not initialized');
-            }
             const receipt = await this.web3.eth.getTransactionReceipt(txHash);
             return receipt;
         } catch (error) {
@@ -284,10 +264,6 @@ class Web3Manager {
     
     async waitForTransaction(txHash, confirmations = 1) {
         try {
-            if (!this.web3) {
-                throw new Error('Web3 not initialized');
-            }
-            
             this.showLoading('Esperando confirmaciones...');
             
             const receipt = await this.web3.eth.waitForTransactionReceipt(txHash);
@@ -381,9 +357,6 @@ class Web3Manager {
     
     // Get web3 instance
     getWeb3() {
-        if (!this.web3 && typeof Web3 !== 'undefined' && window.ethereum) {
-            this.web3 = new Web3(window.ethereum);
-        }
         return this.web3;
     }
     

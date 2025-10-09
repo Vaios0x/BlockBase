@@ -10,31 +10,35 @@ interface GlassCardProps {
   onClick?: () => void;
 }
 
-export default function GlassCard({ 
-  children, 
-  className = '', 
+export default function GlassCard({
+  children,
+  className = '',
   intensity = 'medium',
   hover = true,
-  onClick 
+  onClick
 }: GlassCardProps) {
-  const intensityClasses = {
-    light: 'bg-white/5 backdrop-blur-sm border-white/10',
-    medium: 'bg-white/8 backdrop-blur-md border-white/12',
-    intense: 'bg-white/12 backdrop-blur-lg border-white/18'
+  const getIntensityClass = () => {
+    switch (intensity) {
+      case 'light':
+        return 'bg-white/5 backdrop-blur-sm border-white/10';
+      case 'medium':
+        return 'bg-white/8 backdrop-blur-md border-white/12';
+      case 'intense':
+        return 'bg-white/12 backdrop-blur-lg border-white/18';
+      default:
+        return 'bg-white/8 backdrop-blur-md border-white/12';
+    }
   };
 
-  const hoverClasses = hover 
-    ? 'hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300' 
-    : '';
+  const getHoverClass = () => {
+    return hover
+      ? 'hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300'
+      : '';
+  };
 
   return (
-    <div 
-      className={`
-        ${intensityClasses[intensity]}
-        ${hoverClasses}
-        rounded-2xl border shadow-lg
-        ${className}
-      `}
+    <div
+      className={`rounded-2xl border shadow-lg ${getIntensityClass()} ${getHoverClass()} ${className}`}
       onClick={onClick}
     >
       {children}

@@ -1,4 +1,4 @@
-// Main Application Logic
+// Simplified Main Application Logic
 class BlockBaseApp {
     constructor() {
         this.web3Manager = null;

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import RainbowKitProviderWrapper from '@/providers/RainbowKitProvider'
+import AppKitProvider from '@/context/AppKitProvider'
+import { headers } from 'next/headers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -10,22 +11,24 @@ export const metadata: Metadata = {
   description: 'La plataforma blockchain más avanzada para rentar, vender y gestionar propiedades inmobiliarias con tecnología Web3.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const headersObj = await headers();
+  const cookies = headersObj.get('cookie')
+
   return (
     <html lang="es">
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        <link rel="stylesheet" href="https://unpkg.com/@walletconnect/modal@2.7.1/dist/index.css" />
       </head>
       <body className={inter.className}>
-        <RainbowKitProviderWrapper>
+        <AppKitProvider cookies={cookies}>
           {children}
-        </RainbowKitProviderWrapper>
+        </AppKitProvider>
       </body>
     </html>
   )

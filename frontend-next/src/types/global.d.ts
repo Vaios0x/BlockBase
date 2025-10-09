@@ -1,75 +1,43 @@
-// Global type declarations for Web3 and WalletConnect
-
-interface Window {
-  ethereum?: {
-    isMetaMask?: boolean;
-    request: (args: { method: string; params?: any[] }) => Promise<any>;
-    on: (event: string, callback: (...args: any[]) => void) => void;
-    removeListener: (event: string, callback: (...args: any[]) => void) => void;
-    isConnected: () => boolean;
-  };
-  WalletConnectModal?: new (config: {
-    projectId: string;
-    chains: number[];
-    enableNetworkSwitching?: boolean;
-    enableExplorer?: boolean;
-  }) => {
-    open: () => void;
-    close: () => void;
-    on: (event: string, callback: (...args: any[]) => void) => void;
-  };
-  WalletConnectEthereumProvider?: new (config: {
-    projectId: string;
-    chains: number[];
-    showQrModal?: boolean;
-    qrModalOptions?: any;
-  }) => {
-    enable: () => Promise<string[]>;
-    disconnect: () => Promise<void>;
-    on: (event: string, callback: (...args: any[]) => void) => void;
-    request: (args: { method: string; params?: any[] }) => Promise<any>;
-  };
-  Web3?: any;
-  ethers?: any;
-  QRCode?: any;
-  app?: any;
-}
+// Tipos globales para la aplicación BlockBase
 
 declare global {
   interface Window {
     ethereum?: {
-      isMetaMask?: boolean;
-      request: (args: { method: string; params?: any[] }) => Promise<any>;
-      on: (event: string, callback: (...args: any[]) => void) => void;
-      removeListener: (event: string, callback: (...args: any[]) => void) => void;
-      isConnected: () => boolean;
-    };
-    WalletConnectModal?: new (config: {
-      projectId: string;
-      chains: number[];
-      enableNetworkSwitching?: boolean;
-      enableExplorer?: boolean;
-    }) => {
-      open: () => void;
-      close: () => void;
-      on: (event: string, callback: (...args: any[]) => void) => void;
-    };
-    WalletConnectEthereumProvider?: new (config: {
-      projectId: string;
-      chains: number[];
-      showQrModal?: boolean;
-      qrModalOptions?: any;
-    }) => {
-      enable: () => Promise<string[]>;
-      disconnect: () => Promise<void>;
-      on: (event: string, callback: (...args: any[]) => void) => void;
-      request: (args: { method: string; params?: any[] }) => Promise<any>;
-    };
-    Web3?: any;
-    ethers?: any;
-    QRCode?: any;
-    app?: any;
+      request: (args: { method: string; params?: any[] }) => Promise<any>
+      on: (event: string, callback: (...args: any[]) => void) => void
+      removeListener: (event: string, callback: (...args: any[]) => void) => void
+    }
   }
 }
 
-export {};
+// Tipos para las propiedades
+export interface Property {
+  id: number
+  owner: string
+  name: string
+  description: string
+  price: bigint
+  isRented: boolean
+  isActive: boolean
+}
+
+// Tipos para las subastas
+export interface Auction {
+  id: number
+  propertyId: number
+  highestBid: bigint
+  highestBidder: string
+  endTime: number
+  isActive: boolean
+}
+
+// Tipos para los seguros
+export interface Insurance {
+  id: number
+  propertyId: number
+  premium: bigint
+  coverage: bigint
+  isActive: boolean
+}
+
+export {}

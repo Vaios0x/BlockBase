@@ -12,6 +12,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Wagmi](https://img.shields.io/badge/Wagmi-2.17.5-orange?style=flat-square&logo=wagmi&logoColor=white)](https://wagmi.sh/)
 [![Viem](https://img.shields.io/badge/Viem-2.38.0-purple?style=flat-square&logo=viem&logoColor=white)](https://viem.sh/)
+[![Reown AppKit](https://img.shields.io/badge/Reown%20AppKit-1.8.9-purple?style=flat-square&logo=reown&logoColor=white)](https://docs.reown.com/appkit)
 [![Base](https://img.shields.io/badge/Base-Sepolia-0052FF?style=flat-square&logo=base&logoColor=white)](https://base.org/)
 
 </div>
@@ -72,13 +73,59 @@ graph TB
 - **🎨 Tailwind CSS 3.4.4** for beautiful, responsive design
 - **🔗 Wagmi 2.17.5** for Ethereum interactions
 - **⚡ Viem 2.38.0** for lightweight blockchain communication
-- **🔌 WalletConnect** for seamless wallet integration
+- **🔌 Reown AppKit 1.8.9** for seamless wallet integration and Web3 UX
 
 ### 🛠️ **Development Tools**
 - **⚙️ Hardhat 2.19.0** for smart contract development
 - **📦 PNPM** for efficient package management
 - **🔍 ESLint** for code quality
 - **📝 TypeScript** for type safety
+
+---
+
+## 🔌 **Reown AppKit Integration**
+
+BlockBase leverages **[Reown AppKit](https://docs.reown.com/overview)** (formerly WalletConnect) to provide the most advanced Web3 wallet connection experience:
+
+### ✨ **AppKit Features**
+- **🔐 One-Click Authentication** - Seamless connection to 600+ wallets
+- **📧 Social Login** - Google, Twitter, Discord, GitHub integration
+- **⛽ Gas Sponsorship** - Sponsor gas fees for users
+- **🔄 Onramps & Swaps** - Built-in fiat-to-crypto and token swapping
+- **📊 Analytics** - Comprehensive user insights and transaction tracking
+- **🛡️ Security** - Phishing protection and secure transaction signing
+
+### 🎯 **Authentication Methods**
+| Method | Status | Description |
+|--------|--------|-------------|
+| **Email** | ❌ Disabled | Email-based authentication |
+| **Google** | ✅ Enabled | Google OAuth integration |
+| **Twitter** | ✅ Enabled | Twitter OAuth integration |
+| **Discord** | ✅ Enabled | Discord OAuth integration |
+| **GitHub** | ✅ Enabled | GitHub OAuth integration |
+| **Wallet** | ✅ Enabled | 600+ wallet support |
+
+### 🔧 **Technical Implementation**
+```typescript
+// AppKit Configuration
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId: 'e1b7b8bda639fe3153018f6c76ced0a4',
+  networks: [baseSepolia],
+  features: {
+    analytics: true,
+    socials: ['google', 'twitter', 'discord', 'github'],
+    onramp: true,
+    gasSponsorship: true
+  }
+})
+```
+
+### 📚 **Documentation**
+- **[Complete AppKit Guide](docs/REOWN_APPKIT_INTEGRATION.md)** - Comprehensive integration documentation
+- **[Reown AppKit Docs](https://docs.reown.com/appkit)** - Official AppKit documentation
+- **[Wagmi Documentation](https://wagmi.sh/)** - React hooks for Ethereum
+- **[Viem Documentation](https://viem.sh/)** - TypeScript interface for Ethereum
 
 ---
 

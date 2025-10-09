@@ -1,26 +1,32 @@
-# ===========================================
-# BlockBase - Real Estate Marketplace
-# Variables de Entorno de Configuración
-# ===========================================
+# 🔧 Variables de Entorno - BlockBase
 
-# ===========================================
-# Reown AppKit Configuration
-# ===========================================
+## 📋 Configuración Completa de Variables de Entorno
+
+### 🚀 **Variables Principales Requeridas**
+
+#### **1. Reown AppKit Configuration**
+```bash
 # Obtén tu Project ID desde: https://cloud.reown.com
-NEXT_PUBLIC_PROJECT_ID=e1b7b8bda639fe3153018f6c76ced0a4
+NEXT_PUBLIC_PROJECT_ID=YOUR_PROJECT_ID_HERE
+```
 
-# ===========================================
-# Base Network Configuration
-# ===========================================
+#### **2. Base Network Configuration**
+```bash
 # Base Sepolia RPC URL (Testnet)
 NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL=https://sepolia.base.org
 
 # Base Mainnet RPC URL (Production)
 NEXT_PUBLIC_BASE_MAINNET_RPC_URL=https://mainnet.base.org
 
-# ===========================================
-# Smart Contract Addresses
-# ===========================================
+# Chain ID for Base Sepolia
+NEXT_PUBLIC_CHAIN_ID=84532
+
+# Chain ID for Base Mainnet
+NEXT_PUBLIC_MAINNET_CHAIN_ID=8453
+```
+
+#### **3. Smart Contract Addresses**
+```bash
 # Property Rental Contract
 NEXT_PUBLIC_PROPERTY_RENTAL_ADDRESS=0x7094f1eb1c49Cf89B793844CecE4baE655f3359b
 
@@ -38,19 +44,12 @@ NEXT_PUBLIC_PROPERTY_INSURANCE_ADDRESS=0xc720245C9dbb2C17B2481f2DaDf0959F2379fdf
 
 # Property Management Contract
 NEXT_PUBLIC_PROPERTY_MANAGEMENT_ADDRESS=0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6
+```
 
-# ===========================================
-# Network Configuration
-# ===========================================
-# Chain ID for Base Sepolia
-NEXT_PUBLIC_CHAIN_ID=84532
+### ⚙️ **Variables de Configuración**
 
-# Chain ID for Base Mainnet
-NEXT_PUBLIC_MAINNET_CHAIN_ID=8453
-
-# ===========================================
-# API Configuration
-# ===========================================
+#### **4. API Configuration**
+```bash
 # Base API URL
 NEXT_PUBLIC_API_BASE_URL=https://api.blockbase.com
 
@@ -59,19 +58,19 @@ NEXT_PUBLIC_API_TIMEOUT=30000
 
 # API Retry Attempts
 NEXT_PUBLIC_API_RETRIES=3
+```
 
-# ===========================================
-# Gas Configuration
-# ===========================================
+#### **5. Gas Configuration**
+```bash
 # Default Gas Limit
 NEXT_PUBLIC_DEFAULT_GAS_LIMIT=300000
 
 # Default Gas Price (in wei)
 NEXT_PUBLIC_DEFAULT_GAS_PRICE=20000000000
+```
 
-# ===========================================
-# Business Logic Configuration
-# ===========================================
+#### **6. Business Logic Configuration**
+```bash
 # Maximum Property Price (in ETH)
 NEXT_PUBLIC_MAX_PROPERTY_PRICE=10
 
@@ -83,10 +82,12 @@ NEXT_PUBLIC_MAX_RENTAL_DAYS=365
 
 # Platform Commission (percentage)
 NEXT_PUBLIC_PLATFORM_COMMISSION=2
+```
 
-# ===========================================
-# UI Configuration
-# ===========================================
+### 🎨 **Variables de UI**
+
+#### **7. UI Configuration**
+```bash
 # Theme Configuration
 NEXT_PUBLIC_THEME=dark
 
@@ -104,10 +105,10 @@ NEXT_PUBLIC_GLASS_OPACITY=0.05
 
 # Blur Intensity
 NEXT_PUBLIC_BLUR_INTENSITY=20
+```
 
-# ===========================================
-# Feature Flags
-# ===========================================
+#### **8. Feature Flags**
+```bash
 # Enable NFT Features
 NEXT_PUBLIC_ENABLE_NFTS=true
 
@@ -122,10 +123,12 @@ NEXT_PUBLIC_ENABLE_MANAGEMENT=true
 
 # Enable Escrow Features
 NEXT_PUBLIC_ENABLE_ESCROW=true
+```
 
-# ===========================================
-# Development Configuration
-# ===========================================
+### 🔧 **Variables de Desarrollo**
+
+#### **9. Development Configuration**
+```bash
 # Development Mode
 NODE_ENV=development
 
@@ -134,28 +137,32 @@ NEXT_PUBLIC_DEBUG=false
 
 # Log Level
 NEXT_PUBLIC_LOG_LEVEL=info
+```
 
-# ===========================================
-# Security Configuration
-# ===========================================
+#### **10. Security Configuration**
+```bash
 # Enable Security Headers
 NEXT_PUBLIC_ENABLE_SECURITY_HEADERS=true
 
 # Content Security Policy
 NEXT_PUBLIC_CSP_POLICY=default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';
+```
 
-# ===========================================
-# Analytics Configuration
-# ===========================================
+### 📊 **Variables de Analytics**
+
+#### **11. Analytics Configuration**
+```bash
 # Google Analytics ID (optional)
 NEXT_PUBLIC_GA_ID=
 
 # Mixpanel Token (optional)
 NEXT_PUBLIC_MIXPANEL_TOKEN=
+```
 
-# ===========================================
-# External Services
-# ===========================================
+### 🌐 **Variables de Servicios Externos**
+
+#### **12. External Services**
+```bash
 # IPFS Gateway
 NEXT_PUBLIC_IPFS_GATEWAY=https://ipfs.io/ipfs/
 
@@ -164,10 +171,12 @@ PINATA_API_KEY=
 
 # Pinata Secret Key
 PINATA_SECRET_KEY=
+```
 
-# ===========================================
-# Email Configuration (for notifications)
-# ===========================================
+### 📧 **Variables de Email**
+
+#### **13. Email Configuration**
+```bash
 # SMTP Host
 SMTP_HOST=
 
@@ -182,37 +191,45 @@ SMTP_PASSWORD=
 
 # From Email
 SMTP_FROM_EMAIL=noreply@blockbase.com
+```
 
-# ===========================================
-# Database Configuration (if needed)
-# ===========================================
+### 🗄️ **Variables de Base de Datos**
+
+#### **14. Database Configuration**
+```bash
 # Database URL
 DATABASE_URL=
 
 # Redis URL (for caching)
 REDIS_URL=
+```
 
-# ===========================================
-# Monitoring & Logging
-# ===========================================
+### 📈 **Variables de Monitoreo**
+
+#### **15. Monitoring & Logging**
+```bash
 # Sentry DSN (for error tracking)
 SENTRY_DSN=
 
 # LogRocket App ID (for session replay)
 LOGROCKET_APP_ID=
+```
 
-# ===========================================
-# Deployment Configuration
-# ===========================================
+### 🚀 **Variables de Despliegue**
+
+#### **16. Deployment Configuration**
+```bash
 # Vercel Deployment URL
 VERCEL_URL=
 
 # Custom Domain
 NEXT_PUBLIC_DOMAIN=blockbase.com
+```
 
-# ===========================================
-# Social Media Configuration
-# ===========================================
+### 📱 **Variables de Redes Sociales**
+
+#### **17. Social Media Configuration**
+```bash
 # Twitter Handle
 NEXT_PUBLIC_TWITTER_HANDLE=@BlockBase
 
@@ -221,10 +238,12 @@ NEXT_PUBLIC_DISCORD_SERVER_ID=
 
 # GitHub Repository
 NEXT_PUBLIC_GITHUB_REPO=https://github.com/Vaios0x/BlockBase
+```
 
-# ===========================================
-# Legal & Compliance
-# ===========================================
+### ⚖️ **Variables Legales**
+
+#### **18. Legal & Compliance**
+```bash
 # Terms of Service URL
 NEXT_PUBLIC_TERMS_URL=https://blockbase.com/terms
 
@@ -233,3 +252,24 @@ NEXT_PUBLIC_PRIVACY_URL=https://blockbase.com/privacy
 
 # Cookie Policy URL
 NEXT_PUBLIC_COOKIE_URL=https://blockbase.com/cookies
+```
+
+## 🚀 **Configuración Rápida**
+
+### **Para Desarrollo Local:**
+1. Copia `env.example` a `.env.local`
+2. Configura `NEXT_PUBLIC_PROJECT_ID` con tu Project ID de Reown
+3. Las demás variables ya están configuradas con valores por defecto
+
+### **Para Producción:**
+1. Configura todas las variables en tu plataforma de despliegue
+2. Asegúrate de usar las direcciones de contratos de mainnet
+3. Configura las URLs de API de producción
+
+## 📝 **Notas Importantes**
+
+- **NEXT_PUBLIC_**: Variables que se exponen al cliente
+- **Sin prefijo**: Variables solo del servidor
+- **Reown Project ID**: Obtén uno desde [https://cloud.reown.com](https://cloud.reown.com)
+- **Contratos**: Las direcciones están desplegadas en Base Sepolia
+- **Seguridad**: Nunca commitees archivos `.env` con datos sensibles

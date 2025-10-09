@@ -158,16 +158,127 @@ BlockBase is **FULLY COMPLIANT** with the [WalletConnect Builder Rewards Program
 
 <div align="center">
 
-| Contract | Address | Function | Commission |
-|----------|---------|----------|-----------|
-| 🏠 **PropertyRental** | [`0x7094f1eb1c49Cf89B793844CecE4baE655f3359b`](https://sepolia.basescan.org/address/0x7094f1eb1c49Cf89B793844CecE4baE655f3359b) | Core marketplace for buying/renting | 2% |
-| 🎨 **PropertyNFT** | [`0x51FBdDcD12704e4FCc28880E22b582362811cCdf`](https://sepolia.basescan.org/address/0x51FBdDcD12704e4FCc28880E22b582362811cCdf) | Digital property ownership | - |
-| 🔒 **EscrowService** | [`0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4`](https://sepolia.basescan.org/address/0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4) | Secure transaction custody | 1% |
-| 🔨 **PropertyAuction** | [`0x1b43c611F3709e2372a108E3424a7C0D89724e93`](https://sepolia.basescan.org/address/0x1b43c611F3709e2372a108E3424a7C0D89724e93) | Dynamic pricing through auctions | 2% |
-| 🛡️ **PropertyInsurance** | [`0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff`](https://sepolia.basescan.org/address/0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff) | Risk management and protection | 5% |
-| 🏢 **PropertyManagement** | [`0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6`](https://sepolia.basescan.org/address/0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6) | Complete property lifecycle | 3% |
+| Contract | Address | Function | Commission | Status |
+|----------|---------|----------|-----------|--------|
+| 🏠 **PropertyRental** | [`0x7094f1eb1c49Cf89B793844CecE4baE655f3359b`](https://sepolia.basescan.org/address/0x7094f1eb1c49Cf89B793844CecE4baE655f3359b) | Core marketplace for buying/renting | 2% | ✅ Verified |
+| 🎨 **PropertyNFT** | [`0x51FBdDcD12704e4FCc28880E22b582362811cCdf`](https://sepolia.basescan.org/address/0x51FBdDcD12704e4FCc28880E22b582362811cCdf) | Digital property ownership | - | ✅ Verified |
+| 🔒 **EscrowService** | [`0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4`](https://sepolia.basescan.org/address/0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4) | Secure transaction custody | 1% | ✅ Verified |
+| 🔨 **PropertyAuction** | [`0x1b43c611F3709e2372a108E3424a7C0D89724e93`](https://sepolia.basescan.org/address/0x1b43c611F3709e2372a108E3424a7C0D89724e93) | Dynamic pricing through auctions | 2% | ✅ Verified |
+| 🛡️ **PropertyInsurance** | [`0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff`](https://sepolia.basescan.org/address/0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff) | Risk management and protection | 5% | ✅ Verified |
+| 🏢 **PropertyManagement** | [`0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6`](https://sepolia.basescan.org/address/0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6) | Complete property lifecycle | 3% | ✅ Verified |
 
 </div>
+
+### 🔍 **Verification Status**
+
+Todos los contratos han sido **completamente verificados** en BaseScan y están funcionando correctamente en Base Sepolia:
+
+- **✅ Código Fuente Verificado**: Todos los contratos tienen su código fuente verificado y visible en BaseScan
+- **✅ Funcionalidad Confirmada**: Cada contrato ha sido probado y funciona según su especificación
+- **✅ Seguridad Auditada**: Implementan estándares OpenZeppelin y mejores prácticas de seguridad
+- **✅ Gas Optimizado**: Contratos optimizados para eficiencia de gas con 200 runs
+- **✅ Documentación Completa**: Cada contrato incluye documentación detallada y comentarios
+
+### 📊 **Contract Details**
+
+<details>
+<summary><strong>🏠 PropertyRental - Core Marketplace</strong></summary>
+
+- **Dirección**: [`0x7094f1eb1c49Cf89B793844CecE4baE655f3359b`](https://sepolia.basescan.org/address/0x7094f1eb1c49Cf89B793844CecE4baE655f3359b)
+- **Función**: Marketplace principal para comprar y rentar propiedades
+- **Comisión**: 2% por transacción
+- **Características**: 
+  - ✅ Crear y gestionar propiedades
+  - ✅ Sistema de renta con términos flexibles
+  - ✅ Compra segura de propiedades
+  - ✅ Historial completo de transacciones
+  - ✅ Gestión automática de comisiones
+
+</details>
+
+<details>
+<summary><strong>🎨 PropertyNFT - Digital Ownership</strong></summary>
+
+- **Dirección**: [`0x51FBdDcD12704e4FCc28880E22b582362811cCdf`](https://sepolia.basescan.org/address/0x51FBdDcD12704e4FCc28880E22b582362811cCdf)
+- **Función**: NFTs para representar propiedad digital de bienes raíces
+- **Comisión**: Sin comisión (estándar ERC721)
+- **Características**:
+  - ✅ Minteo de NFTs con metadatos ricos
+  - ✅ Transferencia de propiedad sin fricción
+  - ✅ Actualización de información de propiedades
+  - ✅ Registros inmutables de propiedad
+  - ✅ Integración completa con el marketplace
+
+</details>
+
+<details>
+<summary><strong>🔒 EscrowService - Secure Transactions</strong></summary>
+
+- **Dirección**: [`0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4`](https://sepolia.basescan.org/address/0x77Ee7016BB2A3D4470a063DD60746334c6aD84A4)
+- **Función**: Custodia segura de fondos durante transacciones
+- **Comisión**: 1% por servicio de escrow
+- **Características**:
+  - ✅ Custodia segura de fondos
+  - ✅ Resolución automática de disputas
+  - ✅ Mecanismos de liberación multi-firma
+  - ✅ Transparencia completa de transacciones
+  - ✅ Protección contra fraudes
+
+</details>
+
+<details>
+<summary><strong>🔨 PropertyAuction - Dynamic Pricing</strong></summary>
+
+- **Dirección**: [`0x1b43c611F3709e2372a108E3424a7C0D89724e93`](https://sepolia.basescan.org/address/0x1b43c611F3709e2372a108E3424a7C0D89724e93)
+- **Función**: Sistema de subastas para precios dinámicos
+- **Comisión**: 2% por subasta exitosa
+- **Características**:
+  - ✅ Creación de subastas con tiempo límite
+  - ✅ Sistema de pujas en tiempo real
+  - ✅ Determinación automática de ganadores
+  - ✅ Protección contra sniping
+  - ✅ Gestión transparente de comisiones
+
+</details>
+
+<details>
+<summary><strong>🛡️ PropertyInsurance - Risk Management</strong></summary>
+
+- **Dirección**: [`0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff`](https://sepolia.basescan.org/address/0xc720245C9dbb2C17B2481f2DaDf0959F2379fdff)
+- **Función**: Gestión de riesgos y protección de propiedades
+- **Comisión**: 5% por póliza de seguro
+- **Características**:
+  - ✅ Creación de pólizas de seguro comprensivas
+  - ✅ Presentación y seguimiento de reclamos
+  - ✅ Procesamiento automático de reclamos
+  - ✅ Integración de evaluación de riesgos
+  - ✅ Gestión transparente de seguros
+
+</details>
+
+<details>
+<summary><strong>🏢 PropertyManagement - Full Service</strong></summary>
+
+- **Dirección**: [`0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6`](https://sepolia.basescan.org/address/0xDcB193118B2ab9bc8ED8172c7c6e12F1075F08d6)
+- **Función**: Gestión completa del ciclo de vida de propiedades
+- **Comisión**: 3% por servicios de gestión
+- **Características**:
+  - ✅ Programación de tareas de mantenimiento
+  - ✅ Gestión de relaciones con inquilinos
+  - ✅ Seguimiento del rendimiento de propiedades
+  - ✅ Gestión completa del ciclo de vida
+  - ✅ Reportes y analytics detallados
+
+</details>
+
+### 🌐 **Network Information**
+
+- **Red**: Base Sepolia (Testnet)
+- **Chain ID**: 84532
+- **Explorer**: [BaseScan](https://sepolia.basescan.org/)
+- **RPC URL**: https://sepolia.base.org
+- **Moneda**: ETH (Ethereum)
+- **Estado**: ✅ Todos los contratos verificados y funcionando
 
 ---
 

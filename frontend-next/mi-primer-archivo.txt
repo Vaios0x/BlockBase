@@ -1,0 +1,17 @@
+# Mi Primer Archivo - 2025-10-08
+
+## 👤 Builder: vaiosx.base.eth
+## 🎯 Programa: Builder Rewards
+
+## 📝 Contenido Simple
+Este es mi primer archivo creado en una rama nueva.
+
+## 🎯 Builder Rewards
+- **Basename**: vaiosx.base.eth
+- **Talent Protocol**: https://app.talentprotocol.com/f239f212-d969-44b1-b78c-5a05ae79d5b6
+- **Project ID**: e1b7b8bda639fe3153018f6c76ced0a4
+
+---
+**Timestamp**: 2025-10-08
+**Builder**: vaiosx.base.eth
+**Rewards**: $WCT Tokens

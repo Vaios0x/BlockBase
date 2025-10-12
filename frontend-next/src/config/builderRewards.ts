@@ -5,6 +5,8 @@ export const BUILDER_REWARDS_CONFIG = {
   // WalletConnect Integration Metrics
   walletConnect: {
     projectId: 'e1b7b8bda639fe3153018f6c76ced0a4',
+    name: 'BlockBase Real Estate Marketplace',
+    description: 'Revolutionary real estate marketplace built on Base with WalletConnect integration',
     usage: {
       // Track wallet connections
       connections: 0,
@@ -17,6 +19,11 @@ export const BUILDER_REWARDS_CONFIG = {
         connections: 0,
         transactions: 0,
         newUsers: 0
+      },
+      // Track verified contracts usage
+      verifiedContractsUsage: {
+        totalInteractions: 0,
+        contractInteractions: new Map<string, number>()
       }
     }
   },
@@ -139,10 +146,16 @@ export function trackContractInteraction(contractAddress: string, functionName: 
   BUILDER_REWARDS_CONFIG.analytics.contractInteractions.totalTransactions++
   BUILDER_REWARDS_CONFIG.analytics.weeklyMetrics.contractCalls++
   
+  // Track verified contracts usage for Builder Rewards
+  BUILDER_REWARDS_CONFIG.walletConnect.usage.verifiedContractsUsage.totalInteractions++
+  const currentCount = BUILDER_REWARDS_CONFIG.walletConnect.usage.verifiedContractsUsage.contractInteractions.get(contractAddress) || 0
+  BUILDER_REWARDS_CONFIG.walletConnect.usage.verifiedContractsUsage.contractInteractions.set(contractAddress, currentCount + 1)
+  
   console.log('🏠 Contract interaction tracked for Builder Rewards:', {
     contract: contractAddress,
     function: functionName,
-    totalCalls: BUILDER_REWARDS_CONFIG.analytics.weeklyMetrics.contractCalls
+    totalCalls: BUILDER_REWARDS_CONFIG.analytics.weeklyMetrics.contractCalls,
+    verifiedContractsUsage: BUILDER_REWARDS_CONFIG.walletConnect.usage.verifiedContractsUsage.totalInteractions
   })
 }
 

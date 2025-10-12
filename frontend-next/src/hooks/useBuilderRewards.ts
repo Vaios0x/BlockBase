@@ -6,8 +6,11 @@ import {
   trackContractInteraction,
   getWeeklyMetrics,
   resetWeeklyMetrics,
-  BUILDER_REWARDS_CONFIG 
-} from '@/config/builderRewards'
+  getVerifiedContracts,
+  isContractVerified,
+  getContractByAddress
+} from '@/config/contractTracking'
+import { BUILDER_REWARDS_CONFIG } from '@/config/builderRewards'
 
 export function useBuilderRewards() {
   const { address, isConnected } = useAccount()
@@ -17,6 +20,7 @@ export function useBuilderRewards() {
   useEffect(() => {
     if (isConnected && address) {
       trackWalletConnection(address)
+      console.log('🎯 Builder Rewards: Wallet connected and tracked', { address })
     }
   }, [isConnected, address])
 
@@ -29,18 +33,27 @@ export function useBuilderRewards() {
 
   // Function to track contract interactions
   const trackContractCall = useCallback((contractAddress: string, functionName: string) => {
-    trackContractInteraction(contractAddress, functionName)
-  }, [])
+    if (address) {
+      trackContractInteraction(contractAddress, functionName, address)
+      console.log('🎯 Builder Rewards: Contract call tracked', { contractAddress, functionName, user: address })
+    }
+  }, [address])
 
   // Function to track successful transactions
   const trackSuccessfulTransaction = useCallback((txHash: string, gasUsed: string) => {
-    trackTransaction(txHash, gasUsed, true)
-  }, [])
+    if (address) {
+      trackTransaction(txHash, gasUsed, true, address)
+      console.log('🎯 Builder Rewards: Successful transaction tracked', { txHash, user: address })
+    }
+  }, [address])
 
   // Function to track failed transactions
   const trackFailedTransaction = useCallback((txHash: string, gasUsed: string) => {
-    trackTransaction(txHash, gasUsed, false)
-  }, [])
+    if (address) {
+      trackTransaction(txHash, gasUsed, false, address)
+      console.log('🎯 Builder Rewards: Failed transaction tracked', { txHash, user: address })
+    }
+  }, [address])
 
   // Function to get current metrics
   const getCurrentMetrics = useCallback(() => {
@@ -88,6 +101,9 @@ export function useBuilderRewards() {
     resetMetrics,
     isEligibleForRewards,
     getBuilderScoreInfo,
+    getVerifiedContracts,
+    isContractVerified,
+    getContractByAddress,
     config: BUILDER_REWARDS_CONFIG
   }
 }

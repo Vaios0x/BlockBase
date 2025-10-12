@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 import dynamic from 'next/dynamic';
+import { initializeBuilderRewards } from '@/utils/initializeBuilderRewards';
 import NeuralButton from '@/components/NeuralButton';
 import AppKitWalletConnect from '@/components/AppKitWalletConnect';
 import PropertiesList from '@/components/PropertiesList';
@@ -11,6 +12,7 @@ import ConnectionOptions from '@/components/ConnectionOptions';
 import BuilderRewardsStatus from '@/components/BuilderRewardsStatus';
 import BuilderProfile from '@/components/BuilderProfile';
 import TalentProtocolProfile from '@/components/TalentProtocolProfile';
+import VerifiedContractsStatus from '@/components/VerifiedContractsStatus';
 
 const NeuralBackground = dynamic(() => import('@/components/NeuralBackground'), {
   ssr: false,
@@ -33,6 +35,9 @@ export default function Home() {
     if (typeof window !== 'undefined' && (window as any).app) {
       console.log('BlockBase App initialized');
     }
+    
+    // Initialize Builder Rewards tracking
+    initializeBuilderRewards();
   }, []);
 
   return (
@@ -325,6 +330,11 @@ export default function Home() {
             <div className="dashboard-card glass">
               <h3>Talent Protocol Profile</h3>
               <TalentProtocolProfile />
+            </div>
+            
+            <div className="dashboard-card glass">
+              <h3>Verified Contracts Status</h3>
+              <VerifiedContractsStatus />
             </div>
           </div>
         </div>

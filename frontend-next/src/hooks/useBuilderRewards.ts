@@ -26,7 +26,10 @@ export function useBuilderRewards() {
 
   // Track when user is on Base network
   useEffect(() => {
-    if (chainId === 84532) { // Base Sepolia
+    if ((() => {
+      const baseChainIds = [84532, 8453, 84531]
+      return baseChainIds.includes(chainId as any)
+    })()) { // Base networks
       console.log('🎯 User connected to Base network - Builder Rewards eligible')
     }
   }, [chainId])
@@ -71,7 +74,10 @@ export function useBuilderRewards() {
       hasBasename: true, // ✅ vaiosx.base.eth confirmed
       basename: 'vaiosx.base.eth',
       hasBuilderScore: true, // You need to verify this (≥40)
-      isOnBase: chainId === 84532,
+      isOnBase: (() => {
+        const baseChainIds = [84532, 8453, 84531]
+        return baseChainIds.includes(chainId as any)
+      })(),
       isConnected: isConnected,
       projectId: BUILDER_REWARDS_CONFIG.walletConnect.projectId,
       builderInfo: BUILDER_REWARDS_CONFIG.builder

@@ -17,7 +17,10 @@ export default function VerifiedContractsStatus() {
 
   const verifiedContracts = getVerifiedContracts()
   const metrics = getCurrentMetrics()
-  const isOnBase = chainId === 84532
+  const isOnBase = (() => {
+    const baseChainIds = [84532, 8453, 84531]
+    return baseChainIds.includes(chainId as any)
+  })()
 
   return (
     <ClientOnlyWrapper>

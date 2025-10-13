@@ -9,6 +9,44 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'BlockBase - Real Estate Marketplace',
   description: 'La plataforma blockchain más avanzada para rentar, vender y gestionar propiedades inmobiliarias con tecnología Web3.',
+  keywords: ['blockchain', 'real estate', 'Web3', 'NFT', 'marketplace', 'propiedades', 'inmobiliaria'],
+  authors: [{ name: 'BlockBase Team' }],
+  creator: 'BlockBase',
+  publisher: 'BlockBase',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://blockbase.app'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'BlockBase - Real Estate Marketplace',
+    description: 'La plataforma blockchain más avanzada para rentar, vender y gestionar propiedades inmobiliarias con tecnología Web3.',
+    url: 'https://blockbase.app',
+    siteName: 'BlockBase',
+    locale: 'es_ES',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BlockBase - Real Estate Marketplace',
+    description: 'La plataforma blockchain más avanzada para rentar, vender y gestionar propiedades inmobiliarias con tecnología Web3.',
+    creator: '@BlockBase',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default async function RootLayout({

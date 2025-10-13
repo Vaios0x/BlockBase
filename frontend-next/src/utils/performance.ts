@@ -207,7 +207,7 @@ export function collectPerformanceMetrics() {
 
   const metrics = {
     // Navigation timing
-    dns: navigation.dnsLookupEnd - navigation.dnsLookupStart,
+    dns: navigation.domainLookupEnd - navigation.domainLookupStart,
     tcp: navigation.connectEnd - navigation.connectStart,
     ssl: navigation.secureConnectionStart > 0 ? navigation.connectEnd - navigation.secureConnectionStart : 0,
     ttfb: navigation.responseStart - navigation.requestStart,

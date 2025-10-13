@@ -6,7 +6,7 @@ import NeuralButton from './NeuralButton'
 import ClientOnlyWrapper from './ClientOnlyWrapper'
 import ErrorNotification from './ErrorNotification'
 import ConnectionHelp from './ConnectionHelp'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function AppKitWalletConnect() {
   const { address, isConnected, connector } = useAccount()
